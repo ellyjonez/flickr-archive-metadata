@@ -62,8 +62,8 @@ flickr_archive/
 
 1. **Clone the repository**
    ```bash
-   git clone [repository-url]
-   cd flickr-archive-downloader
+   git clone git@github.com:ellyjonez/flickr-archive-metadata.git
+   cd flickr-archive-metadata
    ```
 
 2. **Create a virtual environment**
@@ -72,7 +72,7 @@ flickr_archive/
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
-3. **Install dependencies**
+3. **Install the flickr api dependency**
    ```bash
    pip install flickrapi requests
    ```
@@ -99,7 +99,7 @@ flickr_archive/
    ```
 
 2. **First run authentication**
-   - The first time you run it, the script will open a browser for Flickr authorization
+   - The first time you run it, the script will prompt you to authorize - it will open a browser for Flickr authorization
    - Grant read access to your account
    - Enter the verification code shown by Flickr
 
