@@ -6,11 +6,11 @@ This is a simple python tool that creates a complete local backup of your Flickr
 
 # Why
 
-Flickr gives users a way to download all their photos (they will send you a link to download the photos in a zip file), but there is no way to download metadata you might also want to preserve such as sweet comments left by people who've long since died, favorites, photo locations, tags, etc. 
+Flickr gives users a way to download all their photos, but those downloads don't include associated data you might also want to preserve such as sweet comments left by people who've long since died, who faved it, photo locations, original upload date, tags, etc. 
 
-In January 2025, Flickr enforced a new rule that free users could no longer have more than 50 private photos. In this enforcement action, Flickr catastrophically deleted my late mom's private photos, including her detailed captions and comments, with almost no notification that this would happen. They claim they sent multiple warnings to affected account holders via email, but there was no evidence of this in the email associated with my mom's account. 
+In January 2025, Flickr enforced a new rule that free users could no longer have more than 50 private photos. In this enforcement action, Flickr catastrophically deleted my late mom's private photos, including her detailed captions and comments, with almost no notification that this would happen. They claim they sent multiple warnings to affected account holders via email, but there was no evidence of this in the email associated with my mom's account. I realized even if I had downloaded her photos via Flickr's basic downloader, I would not have the captions or comments.
 
-I am hoping this saves someone else from losing cherished photos and comments, though for lots of people it's too late. 
+I am hoping this saves someone else from losing cherished photos, captions, comments, though for lots of people it's too late. 
 
 ## Features
 
