@@ -1,4 +1,4 @@
-# Flickr Metadata and Photo Archiver (FlickrMetadataBackup)
+# Flickr Archiver with Metadata
 
 # What
 
@@ -12,11 +12,11 @@ In January 2025 Flickr enforced a new rule that free users could no longer have 
 
 ## Features
 
-- **Complete Photo Backup**: Downloads original resolution photos and video poster frames
-- **Rich Metadata Preservation**: 
+- **Photo Backup**: Downloads the original resolution photo
+- **Saves all the Metadata that is shown on Flickr pages**: 
   - Photo titles, descriptions, and captions
-  - Upload and taken dates
-  - Geolocation data
+  - Uploaded and taken dates
+  - Geolocation coordinates
   - View counts and stats
   - Tags
   - Album/Set memberships
@@ -30,7 +30,7 @@ In January 2025 Flickr enforced a new rule that free users could no longer have 
 
 ## Data Structure
 
-The tool creates an organized archive:
+Running this will create an organized json formatted archive on your local computer:
 
 ```
 flickr_archive/
@@ -105,7 +105,7 @@ flickr_archive/
    - Videos are marked and their poster frames are saved
    - Already downloaded photos are skipped automatically
 
-## Doesn't save Videos! You must do it manually
+## Doesn't save videos! You must save them manually
 
 If you have a lot of videos this might be a problem. 
 Flickr's API doesn't provide direct video downloads. For videos:
@@ -156,6 +156,12 @@ The downloader is designed to be stopped and resumed:
 - Interrupt safely with Ctrl+C anytime
 
 ## Sample Output format 
+
+- metadata.json has the photo info
+- sizes.json has the sizes w/ URLs (does not download every size)
+- comments.json 
+- favorites.json
+- 
 
 ```json
 {
