@@ -2,7 +2,7 @@
 
 # What
 
-This is a simple python tool that creates a complete local backup of your Flickr photos, including and metadata like comments, who faved, and geolocations. It also saves this info for your favorited photos. 
+This is a simple python tool that creates a complete local backup of your Flickr photos, including and metadata like comments, who faved, and location info. It also saves this same metadata for your favorited photos. 
 
 # Why
 
