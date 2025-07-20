@@ -8,7 +8,9 @@ This is a simple python tool that creates a complete local backup of your Flickr
 
 Flickr gives users a way to download all their photos (they will send you a link to download the photos in a zip file), but there is no way to download metadata you might also want to preserve such as sweet comments left by people who've long since died, favorites, photo locations, tags, etc. 
 
-In January 2025 Flickr enforced a new rule that free users could no longer have private photos. They deleted millions of photos.  In this enforcement action, they catastrophically deleted my late mom's private photos, including her detailed captions and comments, with almost no notification that this would happen. They claim they sent multiple warnings via email but they did not. I am hoping this saves someone else from losing cherished photos and comments, though for lots of people it's too late.
+In January 2025, Flickr enforced a new rule that free users could no longer have more than 50 private photos. In this enforcement action, Flickr catastrophically deleted my late mom's private photos, including her detailed captions and comments, with almost no notification that this would happen. They claim they sent multiple warnings to affected account holders via email, but there was no evidence of this in the email associated with my mom's account. 
+
+I am hoping this saves someone else from losing cherished photos and comments, though for lots of people it's too late. 
 
 ## Features
 
@@ -84,7 +86,7 @@ flickr_archive/
    USER_ID = 'your_user_id@N00'
    ```
    
-   To get an API key, you need to go make an app. Unfortunately you will need a paid account to do this. Feel free to email me if you want to use my app ID.
+   To get an API key, you need to register a third party app with Flickr. Unfortunately, you will need a paid Flickr pro account to do this. Feel free to email me if you would like to use my Flickr app info to run this archiver.
    - API Key & Secret: https://www.flickr.com/services/apps/create/
    - User ID: This is not the human readable name you gave your account, it's numeric, not your custom URL name - it looks something like '413469512@N05' If you never created a custom username it might be in your profile URL if not, you can fetch it using https://www.webfx.com/tools/idgettr/ 
 
