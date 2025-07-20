@@ -1,0 +1,181 @@
+# Flickr Metadata and Photo Archiver (FlickrMetadataBackup)
+
+# What
+
+This is a simple python tool that creates a complete local backup of your Flickr photos, including and metadata like comments, who faved, and geolocations. It also saves this info for your favorited photos. 
+
+# Why
+
+Flickr provides a way to download all your photos (they will send you the photos in a zip file), but there is no way to download metadata you might also want to preserve such as sweet comments left by people who've long since died, favorites, photo locations, tags, etc. 
+
+In January 2025 Flickr enforced a new rule that free users could no longer have private photos. They deleted millions of photos.  In this enforcement action, they catastrophically deleted my late mom's private photos, including her detailed captions and comments, with almost no notification that this would happen. They claim they sent multiple warnings via email but they did not. I am hoping this saves someone else even though it will be too late. 
+
+## Features
+
+- **Complete Photo Backup**: Downloads original resolution photos and video poster frames
+- **Rich Metadata Preservation**: 
+  - Photo titles, descriptions, and captions
+  - Upload and taken dates
+  - Geolocation data
+  - View counts and stats
+  - Tags
+  - Album/Set memberships
+- **Social Data**: 
+  - Comments with commenter info and avatars
+  - Favorites with user details
+- **EXIF Data**: Camera settings and technical metadata
+- **Favorites Backup**: Also archives photos you've favorited from other users
+- **Resume Support**: Skip already downloaded content on subsequent runs
+- **User Info Caching**: Efficiently fetches user details for commenters and fans
+
+## Data Structure
+
+The tool creates an organized archive:
+
+```
+flickr_archive/
+├── my_photos/
+│   ├── [photo_id]/
+│   │   ├── original.jpg          # Original resolution photo
+│   │   ├── metadata.json         # Title, description, dates, tags, location
+│   │   ├── comments.json         # Comments with user info
+│   │   ├── favorites.json        # Users who favorited with details
+│   │   ├── exif.json            # Camera/technical data
+│   │   ├── sizes.json           # Available sizes info
+│   │   └── complete.flag        # Indicates successful download
+├── favorited_photos/            # Photos you've favorited (same structure)
+├── my_photos_index.json         # Searchable index of your photos
+├── favorites_index.json         # Index of favorited photos
+├── albums_index.json            # List of all your albums/sets
+└── users_cache.json             # Cached user info for efficiency
+```
+
+## Requirements
+
+- Python 3.7+
+- Flickr API key and secret
+- macOS/Linux/Windows with command line access, or some place you can run some python scripts
+
+## Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone [repository-url]
+   cd flickr-archive-downloader
+   ```
+
+2. **Create a virtual environment**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install flickrapi requests
+   ```
+
+4. **Configure API credentials**
+   - Copy `config_sample.py` to `config.py`
+   - Add your Flickr API credentials:
+   ```python
+   API_KEY = 'your_api_key_here'
+   API_SECRET = 'your_api_secret_here'  
+   USER_ID = 'your_user_id@N00'
+   ```
+   
+   To get an API key, you need to go make an app. Unfortunately you will need a paid account to do this. Feel free to email me if you want to use my app ID.
+   - API Key & Secret: https://www.flickr.com/services/apps/create/
+   - User ID: This is not the human readable name you gave your account, it's numeric, not your custom URL name - it looks something like '413469512@N05' If you never created a custom username it might be in your profile URL if not, you can fetch it using https://www.webfx.com/tools/idgettr/ 
+
+## Usage
+
+1. **Run the downloader**
+   ```bash
+   python downloader.py
+   ```
+
+2. **First run authentication**
+   - The script will open a browser for Flickr authorization
+   - Grant read access to your account
+   - Enter the verification code shown by Flickr
+
+3. **Monitor progress**
+   - The script shows progress like `[148/3220]` for each photo
+   - Videos are marked and their poster frames are saved
+   - Already downloaded photos are skipped automatically
+
+## Doesn't save Videos! You must do it manually
+
+If you have a lot of videos this might be a problem. 
+Flickr's API doesn't provide direct video downloads. For videos:
+
+- The tool saves the metadata with a poster frame as `poster.jpg`
+- Video metadata includes Flickr page URLs
+- Manually download videos from Flickr using the saved URLs
+
+To find all videos:
+```bash
+find flickr_archive -name "metadata.json" -exec grep -l '"media": "video"' {} \;
+```
+
+## How do I browse my archive?
+
+You can't yet, it's just a bunch of JSON. My goal is to eventually build a front-end that can consume this JSON so that you can locally 'browse' your Flickr photos and captions with archival records of comments. I can't backup all of Flickr - I wish I could, as it was a monumental cultural record, but at least this way people can create personal archives if their photos are still there.
+
+## Useful Commands
+
+**Find photos with comments:**
+```bash
+find flickr_archive -name "comments.json" -exec grep -l '"text":' {} \;
+```
+
+**Count total archived items:**
+```bash
+find flickr_archive -name "metadata.json" | wc -l
+```
+
+**Remove complete flags to re-download:**
+```bash
+find flickr_archive -name "complete.flag" -delete
+```
+
+## Additional Scripts
+
+**update_comment_avatars.py** - Adds avatar URLs to existing comments (if you downloaded before this feature was added)
+
+**update_favorites_info.py** - Adds display names and avatars to favorites (if needed for older downloads)
+
+## Resuming Downloads
+
+If you have a lot of pics, downloading could take some time, because there is a sleep built in to avoid rate limiting. 
+
+The downloader is designed to be stopped and resumed:
+- Each photo folder gets a `complete.flag` file when fully downloaded
+- Subsequent runs skip photos with this flag
+- Interrupt safely with Ctrl+C anytime
+
+## Sample Output format 
+
+```json
+{
+  "id": "12345678901",
+  "title": "Sunset at the Beach",
+  "description": "Beautiful sunset captured at Malibu",
+  "date_uploaded": "1609459200",
+  "date_uploaded_formatted": "2021-01-01T00:00:00",
+  "date_taken": "2021-01-01 18:30:00",
+  "tags": ["sunset", "beach", "malibu"],
+  "views": 42,
+  "location": {
+    "latitude": 34.0259,
+    "longitude": -118.7798,
+    "locality": {"_content": "Malibu"},
+    "country": {"_content": "United States"}
+  },
+  "albums": [{
+    "id": "72157677634567890",
+    "title": "California Sunsets"
+  }]
+}
+```
