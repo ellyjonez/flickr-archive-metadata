@@ -88,7 +88,8 @@ flickr_archive/
    
    To get an API key, you need to register a third party app with Flickr. Unfortunately, you will need a paid Flickr pro account to do this. Feel free to email me if you would like to use my Flickr app info to run this archiver.
    - API Key & Secret: https://www.flickr.com/services/apps/create/
-   - User ID: This is not the human readable name you gave your account, it's numeric, not your custom URL name - it looks something like '413469512@N05' If you never created a custom username it might be in your profile URL if not, you can fetch it using https://www.webfx.com/tools/idgettr/ 
+
+   - User ID: This is not your human readable username, it's numeric - it looks something like '413469512@N05' If you never created a custom username it might be in your profile URL. Otherwise, you can fetch it using https://www.webfx.com/tools/idgettr/ 
 
 ## Usage
 
@@ -98,13 +99,12 @@ flickr_archive/
    ```
 
 2. **First run authentication**
-   - The script will open a browser for Flickr authorization
+   - The first time you run it, the script will open a browser for Flickr authorization
    - Grant read access to your account
    - Enter the verification code shown by Flickr
 
 3. **Monitor progress**
    - The script shows progress like `[148/3220]` for each photo
-   - Videos are marked and their poster frames are saved
    - Already downloaded photos are skipped automatically
 
 ## Doesn't save videos! You must save them manually
@@ -124,29 +124,6 @@ find flickr_archive -name "metadata.json" -exec grep -l '"media": "video"' {} \;
 ## How do I browse my archive?
 
 You can't yet, it's just a bunch of JSON. My goal is to eventually build a front-end that can consume this JSON so that you can locally 'browse' your Flickr photos and captions with archival records of comments. I can't backup all of Flickr - I wish I could, as it was a monumental cultural record, but at least this way people can create personal archives if their photos are still there.
-
-## Useful Commands
-
-**Find photos with comments:**
-```bash
-find flickr_archive -name "comments.json" -exec grep -l '"text":' {} \;
-```
-
-**Count total archived items:**
-```bash
-find flickr_archive -name "metadata.json" | wc -l
-```
-
-**Remove complete flags to re-download:**
-```bash
-find flickr_archive -name "complete.flag" -delete
-```
-
-## Additional Scripts
-
-**update_comment_avatars.py** - Adds avatar URLs to existing comments (if you downloaded before this feature was added)
-
-**update_favorites_info.py** - Adds display names and avatars to favorites (if needed for older downloads)
 
 ## Resuming Downloads
 
@@ -186,4 +163,21 @@ The downloader is designed to be stopped and resumed:
     "title": "California Sunsets"
   }]
 }
+```
+
+## Useful Commands
+
+**Find photos with comments:**
+```bash
+find flickr_archive -name "comments.json" -exec grep -l '"text":' {} \;
+```
+
+**Count total archived items:**
+```bash
+find flickr_archive -name "metadata.json" | wc -l
+```
+
+**Remove complete flags to re-download:**
+```bash
+find flickr_archive -name "complete.flag" -delete
 ```
